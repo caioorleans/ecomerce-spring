@@ -1,6 +1,6 @@
 package ecommerce.model;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,5 +27,5 @@ public class Categoria {
 	
 	@ManyToMany
 	@JoinTable(name = "caterogia_produto", joinColumns = @JoinColumn(name = "categoria_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
-	private List<Produto> produtos;
+	private Set<Produto> produtos;
 }

@@ -1,6 +1,6 @@
 package ecommerce.model;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,5 +30,5 @@ public class Produto {
 	private Integer estoque;
 	
 	@ManyToMany(mappedBy="produtos")
-	private List<Categoria> categorias;
+	private Set<Categoria> categorias;
 }
