@@ -18,6 +18,7 @@ import ecommerce.exceptionHandler.Exceptions.CategoriaNotFoundException;
 import ecommerce.model.Categoria;
 import ecommerce.repository.CategoriaRepository;
 import ecommerce.service.categoria.CategoriaService;
+import jakarta.validation.ConstraintViolationException;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoriaServiceTests {
@@ -58,8 +59,18 @@ public class CategoriaServiceTests {
 	public void inexistingIdShouldThrowException() {
 		Optional<Categoria> c = Optional.of(null);
 		when(repository.findById(any(Integer.class))).thenReturn(c);
-		
 		assertThrows(CategoriaNotFoundException.class, () -> categoriaService.getById(1));
+	}
+	
+	@Test
+	public void updatingInexistingCategoriaShouldThrowException() {
+		when(repository.existsById(any(Integer.class))).thenReturn(false);
+		assertThrows(CategoriaNotFoundException.class, () -> categoriaService.update(any(CategoriaDto.class)));
+	}
+	
+	@Test
+	public void idCategoriaDtoNullShouldThrowException() {
+		assertThrows(ConstraintViolationException.class, () -> categoriaService.update(null));
 	}
 
 }
