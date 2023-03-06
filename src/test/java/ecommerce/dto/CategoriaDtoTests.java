@@ -40,6 +40,14 @@ public class CategoriaDtoTests {
 	}
 	
 	@Test
+	public void onlySpacesCategoriaShouldFailValidation() {
+		var categoriaDto = new CategoriaDto();
+		categoriaDto.setDescricao("    ");
+		Set<ConstraintViolation<CategoriaDto>> violations = validator.validate(categoriaDto);
+        assertFalse(violations.isEmpty());
+	}
+	
+	@Test
 	public void validCategoriaShouldAssertValidation() {
 		var categoriaDto = new CategoriaDto();
 		categoriaDto.setDescricao("Terror");
