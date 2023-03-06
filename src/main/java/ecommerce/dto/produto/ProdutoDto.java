@@ -5,6 +5,7 @@ import java.util.Set;
 import ecommerce.model.Categoria;
 import ecommerce.model.Produto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor 
 @AllArgsConstructor
 @Getter @Setter
-public class ProdutoResponseDto {
+public class ProdutoDto {
 	
 	private Integer id;
 	
@@ -27,9 +28,10 @@ public class ProdutoResponseDto {
 	@NotNull(message="Quantidade em estoque é obrigatória")
 	private Integer estoque;
 	
+	@NotEmpty
 	private Set<Categoria> categorias;
 	
-	public ProdutoResponseDto(Produto produto) {
+	public ProdutoDto(Produto produto) {
 		this.id = produto.getId();
 		this.descricao = produto.getDescricao();
 		this.preco = produto.getPreco();
