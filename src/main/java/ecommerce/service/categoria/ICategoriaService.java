@@ -6,7 +6,7 @@ import ecommerce.dto.CategoriaDto;
 
 public interface ICategoriaService {
 
-	public CategoriaDto save(CategoriaDto categoriaDto);
+	public CategoriaDto save(String descricao);
 	
 	public CategoriaDto getById(Integer id);
 	

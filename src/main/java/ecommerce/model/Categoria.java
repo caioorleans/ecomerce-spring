@@ -2,6 +2,7 @@ package ecommerce.model;
 
 import java.util.Set;
 
+import ecommerce.dto.CategoriaDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,11 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Categoria {
 	
+	public Categoria(CategoriaDto categoriaDto) {
+		this.id = categoriaDto.getId();
+		this.descricao = categoriaDto.getDescricao();
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

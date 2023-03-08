@@ -37,8 +37,8 @@ public class CategoriaServiceTests {
 		
 		when(repository.save(any(Categoria.class))).thenReturn(categoria);
 		
-		assertEquals(categoriaService.save(new CategoriaDto()).getId(), categoria.getId());
-		assertEquals(categoriaService.save(new CategoriaDto()).getDescricao(), categoria.getDescricao());
+		assertEquals(categoriaService.save("Terror").getId(), categoria.getId());
+		assertEquals(categoriaService.save("Terror").getDescricao(), categoria.getDescricao());
 	}
 	
 	@Test
@@ -57,20 +57,30 @@ public class CategoriaServiceTests {
 	
 	@Test
 	public void inexistingIdShouldThrowException() {
-		Optional<Categoria> c = Optional.of(null);
+		Optional<Categoria> c = Optional.empty();
 		when(repository.findById(any(Integer.class))).thenReturn(c);
 		assertThrows(CategoriaNotFoundException.class, () -> categoriaService.getById(1));
 	}
 	
 	@Test
 	public void updatingInexistingCategoriaShouldThrowException() {
+		var categoriaDto = new CategoriaDto();
+		categoriaDto.setId(1);
+		categoriaDto.setDescricao("Terror");
 		when(repository.existsById(any(Integer.class))).thenReturn(false);
-		assertThrows(CategoriaNotFoundException.class, () -> categoriaService.update(any(CategoriaDto.class)));
+		assertThrows(CategoriaNotFoundException.class, () -> categoriaService.update(categoriaDto));
 	}
 	
 	@Test
-	public void idCategoriaDtoNullShouldThrowException() {
-		assertThrows(ConstraintViolationException.class, () -> categoriaService.update(null));
+	public void deleteInexistingCategoriaShouldThrowException() {
+		when(repository.existsById(any(Integer.class))).thenReturn(false);
+		assertThrows(CategoriaNotFoundException.class, () -> categoriaService.delete(1));
+	}
+	
+	@Test
+	public void deleteExistingCategoriaShouldReturnTrue() {
+		when(repository.existsById(any(Integer.class))).thenReturn(true);
+		assertEquals(categoriaService.delete(1),true);
 	}
 
 }
